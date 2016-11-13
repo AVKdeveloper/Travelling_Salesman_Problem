@@ -1,5 +1,5 @@
-#ifndef BOX-MULLER_TRANSFORM_H_
-#define BOX-MULLER_TRANSFORM_H_
+#ifndef BOX_MULLER_TRANSFORM_H_
+#define BOX_MULLER_TRANSFORM_H_
 
 #include <utility>
 #include <math.h>
@@ -18,4 +18,4 @@ std::pair<T, T> BoxMullerTransformation(const T&, const T&) {
 	return result;
 }
 
-#endif // BOX-MULLER_TRANSFORM_H_
+#endif // BOX_MULLER_TRANSFORM_H_
