@@ -18,7 +18,7 @@
 int main()
 {
 	const int kMaxVerticesQuantity = 10;
-	const int kTestQuantity = 10;
+	const int kTestQuantity = 5;
 	const bool kDetailedReport = false; // Write datils of every test in console? 
 
 	std::fstream file;
@@ -39,8 +39,9 @@ int main()
 					std::cout << "(" << points[i].first << " ; " << points[i].second << ")  ";
 				}
 			} // generated random points
-			std::cout << std::endl;
-
+			if (kDetailedReport) {
+				std::cout << std::endl;
+			}
 			GraphForMst<double> graph(vertices_quantity, vertices_quantity*(vertices_quantity-1));
 			for (int i = 0; i < vertices_quantity; ++i) { // adding edges into graph
 				for (int j = 0; j < vertices_quantity; ++j) {
