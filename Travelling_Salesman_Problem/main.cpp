@@ -39,7 +39,6 @@ int main()
 			approaching_answers[test_number] = approaching_answer;
 			precise_answers[test_number] = precise_answer;
 			delta[test_number] = approaching_answer - precise_answer;
-			assert(delta[test_number] >= 0); // check that the best answer is better than approaching
 			delta_in_square[test_number] = pow(delta[test_number], 2);
 		}
 		double average_precise_answer = std::accumulate(precise_answers.begin(), precise_answers.end(), 0.0) / precise_answers.size();
