@@ -5,6 +5,8 @@
 #include <unordered_set>
 #include <climits>
 #include <limits>
+#include <stack>
+#include <map>
 #include "disjoint_set_union.h"
 
 template <typename T>
@@ -36,8 +38,13 @@ class GraphForMst {
 public:
 	GraphForMst(const int& number_of_vertices, const int& number_of_edges);
 	void AddEdge(const Edge<T>& edge);
+	void FillInTreeWithPoints(std::vector<std::pair<T, T>> points);
+
 	std::unordered_set<Edge<T>> BuiltMstByBoruvka() const;
+	std::vector<int> GetSortedVerticesOfMstIntoCycle() const;
 };
+
+
 
 #include "graph_for_mst.inl"
 #endif // GRAPH_FOR_MST_H_

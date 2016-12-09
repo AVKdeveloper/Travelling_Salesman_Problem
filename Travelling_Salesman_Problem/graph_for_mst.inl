@@ -15,6 +15,21 @@ void GraphForMst<T>::AddEdge(const Edge<T>& edge) {
 }
 
 template <typename T>
+void GraphForMst<T>::FillInTreeWithPoints(std::vector<std::pair<T, T>> points) {
+	for (int i = 0; i < points.size(); ++i) { // adding edges into graph
+		for (int j = 0; j < points.size(); ++j) {
+			Edge<double> edge;
+			edge.from_ = i;
+			edge.to_ = j;
+			edge.weight_ = sqrt(pow(points[i].first - points[j].first, 2) + pow(points[i].second - points[j].second, 2));
+			if (i != j) {
+				AddEdge(edge);
+			}
+		}
+	} // added edges into graph
+}
+
+template <typename T>
 std::unordered_set<Edge<T>> GraphForMst<T>::BuiltMstByBoruvka() const {
 	DisjointSetUnion connected_components(number_of_vertices_);
 	for (int i = 0; i < number_of_vertices_; ++i) {
@@ -45,6 +60,38 @@ std::unordered_set<Edge<T>> GraphForMst<T>::BuiltMstByBoruvka() const {
 		}
 	}
 	return edges_of_mst;
+}
+
+template <typename T>
+std::vector<int> GraphForMst<T>::GetSortedVerticesOfMstIntoCycle() const {
+	std::unordered_set<Edge<double>> mst_edges = BuiltMstByBoruvka();
+	std::multimap<int, int> map_of_edges; // vertex_from, vertex_to
+	for (Edge<T> edge : mst_edges) {
+		map_of_edges.insert(std::make_pair(edge.from_, edge.to_));
+		map_of_edges.insert(std::make_pair(edge.to_, edge.from_));
+	}
+	std::vector<int> sorted_vertices;
+	std::vector<bool> viseted_vertices(number_of_vertices_, false);
+	std::stack<int> stack_of_vertices;
+	stack_of_vertices.push(mst_edges.begin()->from_);
+	while (!stack_of_vertices.empty()) {
+		int current_vertex = stack_of_vertices.top();
+		stack_of_vertices.pop();
+		if (viseted_vertices[current_vertex]) { // if we are in this vertex not for the first time
+			continue;
+		}
+		sorted_vertices.push_back(current_vertex);
+		viseted_vertices[current_vertex] = true;
+		std::multimap<int, int>::iterator iterator = map_of_edges.find(current_vertex);
+		while (iterator != map_of_edges.end() && iterator->first == current_vertex) {
+			int next_vertex = iterator->second;
+			if (!viseted_vertices[next_vertex]) {
+				stack_of_vertices.push(next_vertex);
+			}
+			++iterator;
+		}
+	}
+	return sorted_vertices;
 }
 
 

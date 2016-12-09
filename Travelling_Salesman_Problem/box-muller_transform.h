@@ -18,4 +18,35 @@ std::pair<T, T> BoxMullerTransformation(const T& value1, const T& value2) {
 	return result;
 }
 
+template <typename T>
+std::vector<std::pair<T, T>> GetVectorOfUniformlyDistributedPoints(const int& points_quantity, const bool& KDetailedReport, 
+	                                                               const int& test_number) {
+	std::vector<std::pair<double, double>> points(points_quantity);
+	if (KDetailedReport) {
+		std::cout << "Point for vertices quantity = " << points_quantity << " test No" << test_number << ":\n";
+	}
+	for (int i = 0; i < points_quantity; ++i) { // generating random points 
+		points[i] = BoxMullerTransformation<T>(1 - rand() / ((T)RAND_MAX + 1), 1 - rand() / ((T)RAND_MAX + 1));
+		if (KDetailedReport) {
+			std::cout << "(" << points[i].first << " ; " << points[i].second << ")  ";
+		}
+	} // generated random points
+	if (KDetailedReport) {
+		std::cout << std::endl;
+	}
+	return points;
+}
+
+template<typename T>
+T FindLengthOfCycle(std::vector<std::pair<T, T>> points, std::vector<int> order_of_points) {
+	T length_of_way = 0;
+	for (int i = 0; i < points.size() - 1; ++i) {
+		length_of_way += sqrt(pow(points[order_of_points[i]].first - points[order_of_points[i + 1]].first, 2) +
+			                  pow(points[order_of_points[i]].second - points[order_of_points[i + 1]].second, 2));
+	}
+	length_of_way += sqrt(pow(points[order_of_points[0]].first - points[order_of_points[points.size() - 1]].first, 2) +
+		                  pow(points[order_of_points[0]].second - points[order_of_points[points.size() - 1]].second, 2));
+	return length_of_way;
+}
+
 #endif // BOX_MULLER_TRANSFORM_H_
