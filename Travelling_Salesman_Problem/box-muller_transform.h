@@ -19,21 +19,11 @@ std::pair<T, T> BoxMullerTransformation(const T& value1, const T& value2) {
 }
 
 template <typename T>
-std::vector<std::pair<T, T>> GetVectorOfUniformlyDistributedPoints(const int& points_quantity, const bool& KDetailedReport, 
-	                                                               const int& test_number) {
+std::vector<std::pair<T, T>> GetVectorOfUniformlyDistributedPoints(const int& points_quantity, const int& test_number) {
 	std::vector<std::pair<double, double>> points(points_quantity);
-	if (KDetailedReport) {
-		std::cout << "Point for vertices quantity = " << points_quantity << " test No" << test_number << ":\n";
-	}
 	for (int i = 0; i < points_quantity; ++i) { // generating random points 
 		points[i] = BoxMullerTransformation<T>(1 - rand() / ((T)RAND_MAX + 1), 1 - rand() / ((T)RAND_MAX + 1));
-		if (KDetailedReport) {
-			std::cout << "(" << points[i].first << " ; " << points[i].second << ")  ";
-		}
 	} // generated random points
-	if (KDetailedReport) {
-		std::cout << std::endl;
-	}
 	return points;
 }
 

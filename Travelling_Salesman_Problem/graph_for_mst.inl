@@ -64,6 +64,7 @@ std::unordered_set<Edge<T>> GraphForMst<T>::BuiltMstByBoruvka() const {
 
 template <typename T>
 std::vector<int> GraphForMst<T>::GetSortedVerticesOfMstIntoCycle() const {
+	// Make cycle using MST (DFS). Method returns order of vertices in cycle
 	std::unordered_set<Edge<double>> mst_edges = BuiltMstByBoruvka();
 	std::multimap<int, int> map_of_edges; // vertex_from, vertex_to
 	for (Edge<T> edge : mst_edges) {
