@@ -38,7 +38,7 @@ int main()
 			double precise_answer = FindBestHamiltonianCycle(points); 
 			approaching_answers[test_number] = approaching_answer;
 			precise_answers[test_number] = precise_answer;
-			delta[test_number] = approaching_answer - precise_answer;
+			delta[test_number] = (approaching_answer - precise_answer) / precise_answer;
 			delta_in_square[test_number] = pow(delta[test_number], 2);
 		}
 		double average_precise_answer = std::accumulate(precise_answers.begin(), precise_answers.end(), 0.0) / precise_answers.size();
@@ -47,7 +47,7 @@ int main()
 			               pow(std::accumulate(delta.begin(), delta.end(), 0.0) / delta.size(), 2);
 		file << vertices_quantity << "                  " << average_precise_answer << 
 			   "                " << average_approaching_answer <<
-			   "                    " << (average_approaching_answer - average_precise_answer) / average_precise_answer <<
+			   "                    " << 100 * (average_approaching_answer - average_precise_answer) / average_precise_answer <<
 			   " %              " << dispesion << "\n";
 	}
 	file.close();
